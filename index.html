@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>Home — Hute Technologies</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Hute Technologies — expert web development, mobile apps, custom software, graphic design, and solar solutions in Zambia.">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- AOS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Boxicons -->
+  <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ═══ LOADER ═══ -->
+  <div id="loader">
+    <span class="loader-logo"><img src="images/logo.png" width="200px" height="200px" alt="Hute Technologies"></span>
+    <div class="spinner"></div>
+  </div>
+  <script>
+    window.addEventListener('load', function () {
+      setTimeout(() => {
+        document.getElementById('loader').classList.add('hidden');
+      }, 600);
+    });
+  </script>
+
+  <!-- ═══ NAV ═══ -->
+  <nav id="navbar">
+    <input type="checkbox" id="check">
+    <label class="logo" for="x">
+      <img src="images/logo.png" alt="Hute Technologies">
+    </label>
+    <ul>
+      <li><a class="active" href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="project.html">Projects</a></li>
+      <li><a href="feedback.html">Feedback</a></li>
+      <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+    </ul>
+    <label for="check" class="checkbtn">
+      <i class="fas fa-bars"></i>
+    </label>
+  </nav>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero-section">
+    <div class="hero-bg"></div>
+    <div class="hero-content" data-aos="fade-up" data-aos-duration="900">
+      <div class="hero-badge">
+        <span></span>
+        Based in Kitwe, Zambia — serving clients globally
+      </div>
+      <h1>
+        We Build <span class="gradient-text">Digital Products</span><br>
+        That Drive Growth
+      </h1>
+      <p>From beautiful websites and mobile apps to custom software  — Hute Technologies turns your ideas into powerful, scalable products.</p>
+      <div class="hero-actions">
+        <a href="services.html" class="btn-primary">Explore Services <i class="fas fa-arrow-right" style="font-size:0.8em"></i></a>
+        <a href="contact.html" class="btn-ghost">Get In Touch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ ABOUT ═══ -->
+  <section class="about-section">
+    <div class="about-container">
+      <div class="about-text" data-aos="fade-right">
+        <span class="section-label">Who We Are</span>
+        <h2 class="section-title">Technology That Empowers Your Business</h2>
+        <p>Hute Technologies is a leading provider of innovative technology solutions, specializing in web development, mobile app development, and custom software. Our mission is to empower businesses with cutting-edge technology that drives growth and enhances user experience.</p>
+        <p>Founded in Kitwe on the Copperbelt, we've delivered impactful digital solutions across Zambia and beyond — combining technical excellence with a deep understanding of our clients' goals.</p>
+        <br>
+        <a href="about.html" class="btn-primary">Learn More About Us</a>
+      </div>
+      <div class="about-image-container" data-aos="fade-left">
+        <img src="images/about_image.jpg" alt="About Hute Technologies" class="about-image">
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SERVICES ═══ -->
+  <section class="services-section" id="services">
+    <div class="services-inner">
+      <div class="services-header centered" data-aos="fade-up">
+        <span class="section-label">What We Offer</span>
+        <h2 class="section-title">Our Services</h2>
+        <p class="section-sub">We offer a wide range of technology services designed to help your business thrive in the digital world.</p>
+      </div>
+      <div class="service-cards">
+        <div class="card" data-aos="fade-up" data-aos-delay="0">
+          <div class="card-icon"><box-icon name='globe' class="Icons"></box-icon></div>
+          <h3>Web Development</h3>
+          <p>We create responsive, fast, and user-friendly websites tailored to your brand and business goals.</p>
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="80">
+          <div class="card-icon"><box-icon type='logo' name='java' class="Icons"></box-icon></div>
+          <h3>App Development</h3>
+          <p>High-performance mobile applications for both iOS and Android, built with modern frameworks.</p>
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="160">
+          <div class="card-icon"><box-icon name='expand-vertical' class="Icons"></box-icon></div>
+          <h3>Software Development</h3>
+          <p>Custom software solutions that streamline your business processes and boost productivity.</p>
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="240">
+          <div class="card-icon"><box-icon type='logo' name='graphql' class="Icons"></box-icon></div>
+          <h3>Graphic Design</h3>
+          <p>Visually stunning graphics and brand assets that communicate your message with impact.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ ACHIEVEMENTS ═══ -->
+  <section class="achievements-section" id="achievements">
+    <div class="achievements-inner">
+      <div class="centered" data-aos="fade-up">
+        <span class="section-label">Our Impact</span>
+        <h2 class="section-title">Numbers That Speak</h2>
+        <p class="section-sub">Results that reflect our commitment to excellence and client satisfaction.</p>
+      </div>
+      <div class="achievement-counters">
+        <div class="counter-item" data-aos="fade-up" data-aos-delay="0">
+          <div class="counter-icon"><box-icon name='code-block'></box-icon></div>
+          <div class="counter" data-target="20">0</div>
+          <h3>Projects Completed</h3>
+        </div>
+        <div class="counter-item" data-aos="fade-up" data-aos-delay="80">
+          <div class="counter-icon"><box-icon name='happy'></box-icon></div>
+          <div class="counter" data-target="30">0</div>
+          <h3>Satisfied Clients</h3>
+        </div>
+        <div class="counter-item" data-aos="fade-up" data-aos-delay="160">
+          <div class="counter-icon"><box-icon name='globe'></box-icon></div>
+          <div class="counter" data-target="5">0</div>
+          <h3>Countries Reached</h3>
+        </div>
+        <div class="counter-item" data-aos="fade-up" data-aos-delay="240">
+          <div class="counter-icon"><box-icon name='coffee'></box-icon></div>
+          <div class="counter" data-target="50">0</div>
+          <h3>Cups of Coffee</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PROJECTS ═══ -->
+  <section class="projects-section" id="projects">
+    <div class="projects-inner">
+      <div class="projects-header centered" data-aos="fade-up">
+        <span class="section-label">Portfolio</span>
+        <h2 class="section-title">Our Projects</h2>
+        <p class="section-sub">Explore our portfolio of successful projects that showcase our expertise and creativity.</p>
+      </div>
+      <div class="row">
+        <div class="project-card" data-aos="fade-up" data-aos-delay="0">
+          <img src="images/tom.png" alt="Project 1">
+          <div class="card-body">
+            <h5 class="card-title">Tom Tinaria Barbershop</h5>
+            <p class="card-text">A modern, responsive website for a local barbershop, featuring a clean design and intuitive user experience.</p>
+            <a href="https://www.tomtinariabarbershop.com/" class="btn-primary" style="font-size:0.85rem; padding:10px 20px;">View Project</a>
+          </div>
+        </div>
+        <div class="project-card" data-aos="fade-up" data-aos-delay="80">
+          <img src="images/app2.png" alt="Project 2">
+          <div class="card-body">
+            <h5 class="card-title">Fylo Webpage</h5>
+            <p class="card-text">A modern, responsive website for a fictional tech company, featuring a clean design and intuitive user experience.</p>
+            <a href="https://humphreytembo.github.io/Fylo/" class="btn-primary" style="font-size:0.85rem; padding:10px 20px;">View Project</a>
+          </div>
+        </div>
+        <div class="project-card" data-aos="fade-up" data-aos-delay="160">
+          <img src="images/app5.png" alt="Project 3">
+          <div class="card-body">
+            <h5 class="card-title">portfolio Website</h5>
+            <p class="card-text">A responsive portfolio website showcasing my work and skills as a web developer.</p>
+            <a href="https://humphreytembo.github.io/Portfolio/" class="btn-primary" style="font-size:0.85rem; padding:10px 20px;">View Project</a>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center; margin-top:40px;">
+        <a href="project.html" class="btn-ghost">View All Projects</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ REVIEWS & FAQ ═══ -->
+  <section class="reviews-section" id="feedback">
+    <div class="reviews-inner">
+      <div class="reviews-header" data-aos="fade-up">
+        <span class="section-label">Client Voices</span>
+        <h2 class="section-title">Reviews & Questions</h2>
+        <p class="section-sub">We value our clients' feedback and are always ready to answer your questions.</p>
+      </div>
+
+      <div class="reviews-grid">
+        <div class="reviews-image" data-aos="zoom-in">
+          <img src="images/reviews_image.png" alt="Client Reviews">
+        </div>
+        <div class="accordion" id="basicAccordion" data-aos="fade-left">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="h1">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c1">
+                What services do you offer?
+              </button>
+            </h2>
+            <div id="c1" class="accordion-collapse collapse" data-bs-parent="#basicAccordion">
+              <div class="accordion-body">We offer web development, app development, graphic design, solar backup planning apps, and tech consulting services tailored to businesses and individuals.</div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="h2">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c2">
+                How long does a website project take?
+              </button>
+            </h2>
+            <div id="c2" class="accordion-collapse collapse" data-bs-parent="#basicAccordion">
+              <div class="accordion-body">Most projects are completed within 1–3 weeks depending on complexity. We ensure timely delivery with regular updates along the way.</div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="h3">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c3">
+                Can I request updates after completion?
+              </button>
+            </h2>
+            <div id="c3" class="accordion-collapse collapse" data-bs-parent="#basicAccordion">
+              <div class="accordion-body">Yes — we provide free support and updates for 3 months after delivery. After that, updates may be subject to a service fee.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="carousel_container" data-aos="fade-up">
+        <div id="demo" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="carousel-caption">
+                <p>"Working with this team was a great experience. They built a professional business website for my brand that exceeded expectations. I'm truly impressed with their creativity and dedication."</p>
+                <img src="images/user-solid-24.png" alt="Kedrick Katebe">
+                <div id="image-caption">Mwela Mutale</div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="carousel-caption">
+                <p>"The sign language interpreter app they created has been life-changing. It's well-designed, user-friendly, and serves the community perfectly. I highly recommend their services."</p>
+                <img src="images/user-solid-24.png" alt="Joshua Yakoba">
+                <div id="image-caption">Joshua Yakoba</div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="carousel-caption">
+                <p>"I needed professional graphic posters for my campaign, and they delivered beyond expectations. The visuals were clean, impactful, and right on brand. Excellent work!"</p>
+                <img src="images/user-solid-24.png" alt="Ernest Sikapizye">
+                <div id="image-caption">Ernest Sikapizye</div>
+              </div>
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+            <i class="fas fa-arrow-left"></i>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TEAM ═══ -->
+  <section class="our-team-section" id="team">
+    <div class="team-inner">
+      <div class="team-header" data-aos="fade-up">
+        <span class="section-label">The People</span>
+        <h2 class="section-title">Meet Our Team</h2>
+        <p class="section-sub">A team of dedicated professionals committed to delivering the best solutions for our clients.</p>
+      </div>
+      <div class="team-members">
+        <div class="team-member" data-aos="fade-up" data-aos-delay="0">
+          <img src="images/team_member_1.jpg" alt="Humphrey Tembo">
+          <h6>Humphrey Tembo</h6>
+          <p>Web Developer</p>
+        </div>
+        <div class="team-member" data-aos="fade-up" data-aos-delay="100">
+          <img src="images/team_member_2.jpeg" alt="Kedrick Katebe">
+          <h6>Kedrick Katebe</h6>
+          <p>software support</p>
+        </div>
+        <div class="team-member" data-aos="fade-up" data-aos-delay="200">
+          <img src="images/team_member_3.jpeg" alt="Modercai Kaluba">
+          <h6>Modercai Kaluba</h6>
+          <p>App Developer</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <section class="footer">
+    <div class="bottom_section">
+      <img src="images/logo.png" alt="Hute Technologies" class="footer-logo">
+      <p>Hute Technologies — delivering innovative digital solutions from Kitwe, Zambia to clients worldwide.</p>
+      <div class="footer-social">
+        <box-icon type='logo' href="https://web.facebook.com/profile.php?id=61575006400911" name='facebook-circle'></box-icon>
+        <box-icon name='envelope' href="https://hutetechnologies943@gmail.com"  type='solid'></box-icon>
+        <box-icon type='logo' href="https://www.instagram.com/hutetechnologies" name='instagram'></box-icon>
+      </div>
+    </div>
+    <div class="bottom_section">
+      <h6>Quick Links</h6>
+      <ul>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="about.html#team">Our Team</a></li>
+        <li><a href="project.html">Projects</a></li>
+      </ul>
+    </div>
+    <div class="bottom_section">
+      <h6>Legal</h6>
+      <ul>
+        <li><a href="policy.html">Privacy Policy</a></li>
+        <li><a href="policy.html">Terms of Service</a></li>
+        <li><a href="policy.html">Refund Policy</a></li>
+      </ul>
+    </div>
+    <div class="bottom_section">
+      <h6>Contact Us</h6>
+      <ul>
+        <li><a href="mailto:hutetechnologies@gmail.com">hutetechnologies943@gmail.com</a></li>
+        <li><a href="#">Kitwe, Copperbelt, Zambia</a></li>
+        <li><a href="tel:+260763117362">+260 763 117 362</a></li>
+      </ul>
+    </div>
+  </section>
+<div class="copyright">
+    &copy; <span id="year"></span> Hute Technologies. All Rights Reserved.
+</div>
+<script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 850, once: true, offset: 80 });
+
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Counter animation
+    function animateCounters() {
+      document.querySelectorAll('.counter').forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        const speed = 200;
+        const step = Math.ceil(target / speed);
+        let count = 0;
+        const timer = setInterval(() => {
+          count = Math.min(count + step, target);
+          counter.textContent = count;
+          if (count >= target) clearInterval(timer);
+        }, 16);
+      });
+    }
+    const achSection = document.querySelector('.achievements-section');
+    if (achSection) {
+      const obs = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) { animateCounters(); obs.disconnect(); }
+      }, { threshold: 0.3 });
+      obs.observe(achSection);
+    }
+  </script>
+</body>
+</html>

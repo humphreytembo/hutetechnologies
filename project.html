@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>Projects — Hute Technologies</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore our portfolio of web, app, and graphic design projects — Hute Technologies.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* ── Filter bar ── */
+    .filter-bar {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 52px;
+    }
+    .filter-btn {
+      background: transparent;
+      border: 1px solid var(--brand-border);
+      color: var(--brand-muted);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 9px 24px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .filter-btn .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.5;
+    }
+    .filter-btn:hover { border-color: rgba(255,255,255,0.2); color: #fff; background: rgba(255,255,255,0.04); }
+    .filter-btn.active { background: var(--brand-blue); border-color: var(--brand-blue); color: #fff; }
+    .filter-btn.active .dot { opacity: 1; }
+
+    /* ── Projects grid ── */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    /* ── Project card ── */
+    .pcard {
+      background: var(--brand-card);
+      border: 1px solid var(--brand-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+    .pcard:hover {
+      transform: translateY(-8px);
+      border-color: rgba(0,87,255,0.35);
+      box-shadow: var(--shadow-glow);
+    }
+    .pcard-img {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .pcard:hover .pcard-img { transform: scale(1.05); }
+    .pcard-img-wrap { overflow: hidden; position: relative; }
+
+    /* Category pill on image */
+    .pcard-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(0,87,255,0.85);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 100px;
+    }
+    .pcard-tag.teal { background: rgba(0,180,138,0.85); }
+    .pcard-tag.amber { background: rgba(180,117,23,0.9); }
+
+    .pcard-body {
+      padding: 22px 24px 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .pcard-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .pcard-desc {
+      font-size: 0.875rem;
+      color: var(--brand-muted);
+      line-height: 1.65;
+      flex: 1;
+      margin-bottom: 20px;
+    }
+    .pcard-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: transparent;
+      border: 1px solid rgba(0,87,255,0.4);
+      color: #6fa8ff;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 9px 18px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all var(--transition);
+      text-decoration: none;
+      align-self: flex-start;
+    }
+    .pcard-btn:hover {
+      background: var(--brand-blue);
+      border-color: var(--brand-blue);
+      color: #fff;
+    }
+    .pcard-btn i { font-size: 0.75rem; }
+
+    /* hide items */
+    .pcard-wrap { transition: opacity 0.3s ease, transform 0.3s ease; }
+    .pcard-wrap.hidden { display: none; }
+
+    /* ═══════════════════════════════════════════
+       LIGHTBOX (graphics preview)
+    ═══════════════════════════════════════════ */
+    .lightbox-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 8, 18, 0.95);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 72px 24px 24px;
+    }
+    .lightbox-overlay.open {
+      display: flex;
+      animation: lbFade 0.25s ease;
+    }
+    @keyframes lbFade { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes lbIn   { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+
+    /* Close (cross) button — always inside the screen, top-right */
+    .lb-close {
+      position: absolute;
+      top: 18px;
+      right: 20px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      color: #fff;
+      font-size: 1.05rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background var(--transition), border-color var(--transition), transform var(--transition);
+      z-index: 5;
+    }
+    .lb-close:hover {
+      background: #e74c3c;
+      border-color: #e74c3c;
+      transform: rotate(90deg);
+    }
+    .lb-close:focus-visible,
+    .lb-nav:focus-visible { outline: 2px solid var(--brand-teal); outline-offset: 3px; }
+
+    /* Prev / Next */
+    .lb-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      color: #fff;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background var(--transition), border-color var(--transition);
+      z-index: 5;
+    }
+    .lb-nav:hover { background: var(--brand-blue); border-color: var(--brand-blue); }
+    .lb-prev { left: 24px; }
+    .lb-next { right: 24px; }
+    .lb-nav.lb-hidden { display: none; }
+
+    /* Stage */
+    .lb-stage {
+      margin: 0;
+      width: 100%;
+      max-width: 980px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      animation: lbIn 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    .lb-img-wrap {
+      background: var(--brand-card);
+      border: 1px solid var(--brand-border);
+      border-radius: var(--radius-lg);
+      padding: 10px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.7);
+      max-width: 100%;
+    }
+    .lb-img-wrap img {
+      display: block;
+      max-width: 100%;
+      max-height: calc(100vh - 250px);
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: calc(var(--radius-lg) - 8px);
+    }
+    .lb-caption {
+      text-align: center;
+      max-width: 640px;
+    }
+    .lb-count {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--brand-teal);
+      margin-bottom: 6px;
+    }
+    .lb-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .lb-desc {
+      font-size: 0.88rem;
+      color: var(--brand-muted);
+      line-height: 1.6;
+    }
+
+    /* ── Stats bar ── */
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      flex-wrap: wrap;
+      max-width: 700px;
+      margin: 0 auto 64px;
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--brand-blue), var(--brand-teal));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label { font-size: 0.78rem; color: var(--brand-muted); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 4px; }
+
+    @media (max-width: 768px) {
+      .stats-bar { gap: 24px; }
+      .portfolio-grid { grid-template-columns: 1fr; }
+
+      .lightbox-overlay { padding: 68px 14px 96px; }
+      .lb-close { top: 12px; right: 12px; width: 42px; height: 42px; }
+      .lb-nav {
+        top: auto;
+        bottom: 24px;
+        transform: none;
+        width: 46px;
+        height: 46px;
+      }
+      .lb-prev { left: calc(50% - 60px); }
+      .lb-next { right: calc(50% - 60px); }
+      .lb-img-wrap { padding: 6px; }
+      .lb-img-wrap img { max-height: calc(100vh - 300px); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loader -->
+  <div id="loader">
+    <span class="loader-logo"><img src="images/logo.png" width="200px" height="200px" alt="Hute Technologies"></span>
+    <div class="spinner"></div>
+  </div>
+  <script>
+    window.addEventListener('load', () => setTimeout(() => document.getElementById('loader').classList.add('hidden'), 600));
+  </script>
+
+  <!-- Nav -->
+  <nav id="navbar">
+    <input type="checkbox" id="check">
+    <label class="logo" for="x"><img src="images/logo.png" alt="Hute Technologies"></label>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a class="active" href="project.html">Projects</a></li>
+      <li><a href="feedback.html">Feedback</a></li>
+      <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+    </ul>
+    <label for="check" class="checkbtn"><i class="fas fa-bars"></i></label>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero-section-feedback">
+    <div class="background-zoom-feedback"></div>
+    <div class="hero-content" data-aos="fade-up">
+      <span class="section-label" style="justify-content:center; margin-bottom:16px;">Our Work</span>
+      <h1>Projects & Portfolio</h1>
+      <p>A showcase of websites, apps, and designs we've built for clients across Zambia and beyond.</p>
+    </div>
+  </section>
+
+  <!-- Portfolio Section -->
+  <section style="background: var(--brand-dark); padding: 100px 48px;">
+    <div style="max-width:1200px; margin:0 auto;">
+
+      <!-- Stats -->
+      <div class="stats-bar" data-aos="fade-up">
+        <div class="stat-item"><div class="stat-num">20+</div><div class="stat-label">Projects Delivered</div></div>
+        <div class="stat-item"><div class="stat-num">30+</div><div class="stat-label">Happy Clients</div></div>
+        <div class="stat-item"><div class="stat-num">5</div><div class="stat-label">Countries</div></div>
+        <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Service Types</div></div>
+      </div>
+
+      <!-- Filter -->
+      <div class="filter-bar" data-aos="fade-up">
+        <button class="filter-btn active" data-filter="all"><span class="dot"></span> All Projects</button>
+        <button class="filter-btn" data-filter="web"><span class="dot"></span> Web</button>
+        <button class="filter-btn" data-filter="app"><span class="dot"></span> Apps</button>
+        <button class="filter-btn" data-filter="graphics"><span class="dot"></span> Graphics</button>
+      </div>
+
+      <!-- Grid -->
+      <div class="portfolio-grid" id="portfolioGrid">
+
+        <!-- WEB PROJECTS -->
+
+        
+
+        <div class="pcard-wrap" data-category="web" data-aos="fade-up" data-aos-delay="0">
+          <div class="pcard">
+            <div class="pcard-img-wrap">
+              <img src="images/tom.png" class="pcard-img" alt="Business Website">
+              <span class="pcard-tag">Web</span>
+            </div>
+            <div class="pcard-body">
+              <div class="pcard-title">Tom Tinaria Barbershop</div>
+              <div class="pcard-desc">A modern, responsive website for a local barbershop, featuring a clean design and intuitive user experience.</div>
+              <a href="https://www.tomtinariabarbershop.com/" class="pcard-btn">View Project <i class="fas fa-external-link-alt"></i></a>
+            </div>
+          </div>
+        </div>
+
+       
+        <div class="pcard-wrap" data-category="web" data-aos="fade-up" data-aos-delay="60">
+          <div class="pcard">
+            <div class="pcard-img-wrap">
+              <img src="images/app5.png" class="pcard-img" alt="E-commerce Platform">
+              <span class="pcard-tag">Web</span>
+            </div>
+            <div class="pcard-body">
+              <div class="pcard-title">portfolio Website</div>
+              <div class="pcard-desc">A responsive portfolio website showcasing my work and skills as a web developer.</div>
+              <a href="https://humphreytembo.github.io/Portfolio/" class="pcard-btn">View Project <i class="fas fa-external-link-alt"></i></a>
+            </div>
+          </div>
+        </div>
+        
+        
+
+        <!-- APP PROJECTS -->
+        <div class="pcard-wrap" data-category="app" data-aos="fade-up" data-aos-delay="0">
+          <div class="pcard">
+            <div class="pcard-img-wrap">
+              <img src="images/app4.png" class="pcard-img" alt="Sign Language App">
+              <span class="pcard-tag teal">App</span>
+            </div>
+            <div class="pcard-body">
+              <div class="pcard-title">Sign Language Interpreter App</div>
+              <div class="pcard-desc">A life-changing mobile application that bridges communication between the deaf and hearing communities using real-time interpretation.</div>
+              <a href="#" class="pcard-btn">View Project <i class="fas fa-external-link-alt"></i></a>
+            </div>
+          </div>
+        </div>
+
+       
+
+        <!-- GRAPHICS PROJECTS -->
+        <div class="pcard-wrap" data-category="graphics" data-aos="fade-up" data-aos-delay="0">
+          <div class="pcard">
+            <div class="pcard-img-wrap">
+              <img src="images/graphic-1.png" class="pcard-img" alt="Campaign Poster">
+              <span class="pcard-tag amber">Graphics</span>
+            </div>
+            <div class="pcard-body">
+              <div class="pcard-title">Campaign Poster Design</div>
+              <div class="pcard-desc">Bold, on-brand poster designs for a political campaign — crafted to communicate impact and professionalism.</div>
+              <button class="pcard-btn" onclick="openLightbox(this)">View Full Image <i class="fas fa-expand"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="pcard-wrap" data-category="graphics" data-aos="fade-up" data-aos-delay="80">
+          <div class="pcard">
+            <div class="pcard-img-wrap">
+              <img src="images/graphic-2.png" class="pcard-img" alt="Brand Identity">
+              <span class="pcard-tag amber">Graphics</span>
+            </div>
+            <div class="pcard-body">
+              <div class="pcard-title">Brand Identity Package</div>
+              <div class="pcard-desc">Logo, colour palette, and brand guidelines designed for a new business entering the Zambian market.</div>
+              <button class="pcard-btn" onclick="openLightbox(this)">View Full Image <i class="fas fa-expand"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="pcard-wrap" data-category="graphics" data-aos="fade-up" data-aos-delay="160">
+          <div class="pcard">
+            <div class="pcard-img-wrap">
+              <img src="images/graphic-3.png" class="pcard-img" alt="Social Media Graphics">
+              <span class="pcard-tag amber">Graphics</span>
+            </div>
+            <div class="pcard-body">
+              <div class="pcard-title">Social Media Graphics</div>
+              <div class="pcard-desc">A full suite of social media templates and post designs created for consistent brand presence across platforms.</div>
+              <button class="pcard-btn" onclick="openLightbox(this)">View Full Image <i class="fas fa-expand"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="pcard-wrap" data-category="graphics" data-aos="fade-up" data-aos-delay="240">
+          <div class="pcard">
+            <div class="pcard-img-wrap">
+              <img src="images/graphic-4.png" class="pcard-img" alt="Event Flyer">
+              <span class="pcard-tag amber">Graphics</span>
+            </div>
+            <div class="pcard-body">
+              <div class="pcard-title">Event Flyer & Branding</div>
+              <div class="pcard-desc">Eye-catching event flyers and supporting graphics designed to maximize attendance and brand awareness.</div>
+              <button class="pcard-btn" onclick="openLightbox(this)">View Full Image <i class="fas fa-expand"></i></button>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /portfolio-grid -->
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Project preview">
+    <button class="lb-close" type="button" aria-label="Close preview" onclick="closeLightbox()">
+      <i class="fas fa-times"></i>
+    </button>
+
+    <button class="lb-nav lb-prev" type="button" aria-label="Previous image" onclick="stepLightbox(-1)">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+
+    <figure class="lb-stage" id="lbStage">
+      <div class="lb-img-wrap">
+        <img id="lb-img" src="" alt="Project preview">
+      </div>
+      <figcaption class="lb-caption">
+        <span class="lb-count" id="lb-count"></span>
+        <h3 class="lb-title" id="lb-title"></h3>
+        <p class="lb-desc" id="lb-desc"></p>
+      </figcaption>
+    </figure>
+
+    <button class="lb-nav lb-next" type="button" aria-label="Next image" onclick="stepLightbox(1)">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+
+  <!-- CTA -->
+  <section style="background: var(--brand-dark-2); padding: 100px 48px;">
+    <div style="max-width:700px; margin:0 auto; text-align:center;" data-aos="fade-up">
+      <span class="section-label" style="justify-content:center; margin-bottom:16px;">Your Turn</span>
+      <h2 class="section-title">Ready to Build Something?</h2>
+      <p class="section-sub" style="margin:0 auto 32px;">Let's collaborate on your next project. Share your vision with us and we'll make it happen.</p>
+      <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+        <a href="contact.html" class="btn-primary">Start a Project <i class="fas fa-arrow-right" style="font-size:0.8em"></i></a>
+        <a href="services.html" class="btn-ghost">Explore Services</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <section class="footer">
+    <div class="bottom_section">
+      <img src="images/logo.png" alt="Hute Technologies" class="footer-logo">
+      <p>Hute Technologies — delivering innovative digital solutions from Kitwe, Zambia to clients worldwide.</p>
+      <div class="footer-social">
+        <box-icon type='logo' name='facebook-circle'></box-icon>
+        <box-icon name='envelope' type='solid'></box-icon>
+        <box-icon type='logo' name='instagram'></box-icon>
+      </div>
+    </div>
+    <div class="bottom_section">
+      <h6>Quick Links</h6>
+      <ul>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="project.html">Projects</a></li>
+      </ul>
+    </div>
+    <div class="bottom_section">
+      <h6>Legal</h6>
+      <ul>
+        <li><a href="policy.html">Privacy Policy</a></li>
+        <li><a href="policy.html">Terms of Service</a></li>
+        <li><a href="policy.html">Refund Policy</a></li>
+      </ul>
+    </div>
+    <div class="bottom_section">
+      <h6>Contact Us</h6>
+      <ul>
+        <li><a href="mailto:hutetechnologies@gmail.com">hutetechnologies@gmail.com</a></li>
+        <li><a href="#">Kitwe, Copperbelt, Zambia</a></li>
+        <li><a href="tel:+260763117362">+260 763 117 362</a></li>
+      </ul>
+    </div>
+  </section>
+  <div class="copyright">
+    &copy; <span id="year"></span> Hute Technologies. All Rights Reserved.
+</div>
+<script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 850, once: true, offset: 80 });
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 40));
+
+    // Filter
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.pcard-wrap').forEach(item => {
+          const cat = item.dataset.category;
+          item.classList.toggle('hidden', filter !== 'all' && cat !== filter);
+        });
+      });
+    });
+
+    // ── Lightbox (graphics gallery) ──
+    const lightbox = document.getElementById('lightbox');
+    const lbImg    = document.getElementById('lb-img');
+    const lbTitle  = document.getElementById('lb-title');
+    const lbDesc   = document.getElementById('lb-desc');
+    const lbCount  = document.getElementById('lb-count');
+    const lbPrev   = document.querySelector('.lb-prev');
+    const lbNext   = document.querySelector('.lb-next');
+    const lbStage  = document.getElementById('lbStage');
+
+    let lbItems = [];      // all graphics cards
+    let lbIndex = 0;
+    let lbLastFocus = null;
+
+    function renderLightbox() {
+      const card = lbItems[lbIndex];
+      const img  = card.querySelector('.pcard-img');
+      lbImg.src = img.getAttribute('src');
+      lbImg.alt = img.getAttribute('alt') || 'Project preview';
+      lbTitle.textContent = card.querySelector('.pcard-title').textContent.trim();
+      lbDesc.textContent  = card.querySelector('.pcard-desc').textContent.trim();
+      lbCount.textContent = (lbIndex + 1) + ' / ' + lbItems.length;
+
+      const multiple = lbItems.length > 1;
+      lbPrev.classList.toggle('lb-hidden', !multiple);
+      lbNext.classList.toggle('lb-hidden', !multiple);
+
+      // replay the entrance animation on every change
+      lbStage.style.animation = 'none';
+      void lbStage.offsetWidth;
+      lbStage.style.animation = '';
+    }
+
+    function openLightbox(btn) {
+      lbItems = Array.from(document.querySelectorAll('.pcard-wrap[data-category="graphics"]'));
+      lbIndex = Math.max(0, lbItems.indexOf(btn.closest('.pcard-wrap')));
+      lbLastFocus = document.activeElement;
+      renderLightbox();
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      lightbox.querySelector('.lb-close').focus();
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+      lbImg.src = '';
+      if (lbLastFocus) lbLastFocus.focus();
+    }
+
+    function stepLightbox(dir) {
+      if (lbItems.length < 2) return;
+      lbIndex = (lbIndex + dir + lbItems.length) % lbItems.length;
+      renderLightbox();
+    }
+
+    // Click on the dark backdrop closes the viewer
+    lightbox.addEventListener('click', e => {
+      if (!e.target.closest('.lb-img-wrap, .lb-caption, .lb-nav, .lb-close')) closeLightbox();
+    });
+
+    // Keyboard: Esc closes, arrows navigate
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') stepLightbox(-1);
+      if (e.key === 'ArrowRight') stepLightbox(1);
+    });
+
+    // Touch: swipe left/right to navigate
+    let touchStartX = null;
+    lightbox.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
+    lightbox.addEventListener('touchend', e => {
+      if (touchStartX === null) return;
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 50) stepLightbox(dx < 0 ? 1 : -1);
+      touchStartX = null;
+    }, { passive: true });
+  </script>
+</body>
+</html>

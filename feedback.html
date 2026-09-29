@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>Feedback — Hute Technologies</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Client reviews and frequently asked questions — Hute Technologies.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* ── Stars ── */
+    .star-row { display:flex; gap:4px; justify-content:center; margin-bottom:18px; }
+    .star-row i { color:#f59e0b; font-size:0.9rem; }
+
+    /* ── Testimonial Cards Grid ── */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 1200px;
+      margin: 56px auto 0;
+    }
+    .tcard {
+      background: var(--brand-card);
+      border: 1px solid var(--brand-border);
+      border-radius: var(--radius-md);
+      padding: 32px 28px 28px;
+      transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+      position: relative;
+    }
+    .tcard:hover {
+      transform: translateY(-7px);
+      border-color: rgba(0,87,255,0.35);
+      box-shadow: var(--shadow-glow);
+    }
+    .tcard .quote-icon {
+      font-size: 3rem;
+      line-height: 1;
+      color: var(--brand-blue);
+      opacity: 0.25;
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      font-family: Georgia, serif;
+      pointer-events: none;
+    }
+    .tcard p {
+      font-size: 0.92rem;
+      color: var(--brand-muted);
+      line-height: 1.75;
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+    .tcard-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .tcard-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--brand-blue), var(--brand-teal));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .tcard-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #fff;
+    }
+    .tcard-role {
+      font-size: 0.78rem;
+      color: var(--brand-muted-2);
+      margin-top: 2px;
+    }
+
+    /* ── FAQ ── */
+    .faq-section {
+      background: var(--brand-dark);
+      padding: 100px 48px;
+    }
+    .faq-inner {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    .faq-item {
+      background: var(--brand-card);
+      border: 1px solid var(--brand-border);
+      border-radius: var(--radius-md);
+      margin-bottom: 14px;
+      overflow: hidden;
+      transition: border-color var(--transition);
+    }
+    .faq-item.open { border-color: rgba(0,87,255,0.35); }
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: left;
+      gap: 16px;
+    }
+    .faq-question .faq-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(0,87,255,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background var(--transition), transform var(--transition);
+    }
+    .faq-question .faq-icon i { color: var(--brand-blue); font-size: 0.7rem; transition: transform var(--transition); }
+    .faq-item.open .faq-icon { background: var(--brand-blue); }
+    .faq-item.open .faq-icon i { color: #fff; transform: rotate(45deg); }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), padding 0.3s ease;
+      padding: 0 24px;
+    }
+    .faq-answer p {
+      color: var(--brand-muted);
+      font-size: 0.9rem;
+      line-height: 1.75;
+      padding-bottom: 20px;
+    }
+    .faq-item.open .faq-answer { max-height: 300px; }
+
+    /* ── CTA Banner ── */
+    .cta-banner {
+      background: linear-gradient(135deg, rgba(0,87,255,0.15) 0%, rgba(0,212,164,0.08) 100%);
+      border: 1px solid rgba(0,87,255,0.2);
+      border-radius: var(--radius-xl);
+      padding: 56px 40px;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .cta-banner h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 14px;
+    }
+    .cta-banner p { color: var(--brand-muted); margin-bottom: 28px; }
+
+    @media (max-width: 768px) {
+      .faq-section { padding: 64px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loader -->
+   <div id="loader">
+    <span class="loader-logo"><img src="images/logo.png" width="200px" height="200px" alt="Hute Technologies"></span>
+    <div class="spinner"></div>
+  </div>
+  <script>
+    window.addEventListener('load', () => setTimeout(() => document.getElementById('loader').classList.add('hidden'), 600));
+  </script>
+
+  <!-- Nav -->
+  <nav id="navbar">
+    <input type="checkbox" id="check">
+    <label class="logo" for="x"><img src="images/logo.png" alt="Hute Technologies"></label>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="project.html">Projects</a></li>
+      <li><a class="active" href="feedback.html">Feedback</a></li>
+      <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+    </ul>
+    <label for="check" class="checkbtn"><i class="fas fa-bars"></i></label>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero-section-feedback">
+    <div class="background-zoom-feedback"></div>
+    <div class="hero-content" data-aos="fade-up">
+      <span class="section-label" style="justify-content:center; margin-bottom:16px;">What Clients Say</span>
+      <h1>Reviews & Questions</h1>
+      <p>Real experiences from people we've had the privilege to work with.</p>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section style="background: var(--brand-dark-2); padding: 100px 48px;">
+    <div style="max-width:1200px; margin:0 auto;">
+      <div class="centered" data-aos="fade-up">
+        <span class="section-label">Client Voices</span>
+        <h2 class="section-title">What Our Clients Say</h2>
+        <p class="section-sub">Don't just take our word for it — hear from the people we've built for.</p>
+      </div>
+
+      <div class="testimonials-grid">
+
+        <div class="tcard" data-aos="fade-up" data-aos-delay="0">
+          <span class="quote-icon">"</span>
+          <div class="star-row">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <p>"Working with this team was a great experience. They built a professional business website for my brand that exceeded expectations. I'm truly impressed with their creativity and dedication."</p>
+          <div class="tcard-author">
+            <div class="tcard-avatar">MM</div>
+            <div>
+              <div class="tcard-name">Mwela Mutale</div>
+              <div class="tcard-role">Business Owner</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tcard" data-aos="fade-up" data-aos-delay="100">
+          <span class="quote-icon">"</span>
+          <div class="star-row">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <p>"The sign language interpreter app they created has been life-changing. It's well-designed, user-friendly, and serves the community perfectly. I highly recommend their services."</p>
+          <div class="tcard-author">
+            <div class="tcard-avatar">JY</div>
+            <div>
+              <div class="tcard-name">Joshua Yakoba</div>
+              <div class="tcard-role">Community Advocate</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tcard" data-aos="fade-up" data-aos-delay="200">
+          <span class="quote-icon">"</span>
+          <div class="star-row">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+          </div>
+          <p>"I needed professional graphic posters for my campaign, and they delivered beyond expectations. The visuals were clean, impactful, and right on brand. Excellent work!"</p>
+          <div class="tcard-author">
+            <div class="tcard-avatar">ES</div>
+            <div>
+              <div class="tcard-name">Ernest Sikapizye</div>
+              <div class="tcard-role">Campaign Manager</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section">
+    <div class="faq-inner">
+      <div class="centered" data-aos="fade-up" style="margin-bottom:48px;">
+        <span class="section-label">Got Questions?</span>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-sub" style="margin:0 auto;">Everything you need to know before working with us.</p>
+      </div>
+
+      <div data-aos="fade-up" data-aos-delay="80">
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            What services do you offer at Hute Technologies?
+            <span class="faq-icon"><i class="fas fa-plus"></i></span>
+          </button>
+          <div class="faq-answer">
+            <p>We offer web development, mobile app development, custom software, graphic design, solar backup planning apps, and tech consulting — tailored to businesses and individuals of all sizes.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            How long does it take to complete a website project?
+            <span class="faq-icon"><i class="fas fa-plus"></i></span>
+          </button>
+          <div class="faq-answer">
+            <p>Most website projects are completed within 1–3 weeks depending on complexity and the number of pages required. We ensure timely delivery with regular progress updates throughout.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Can I request updates after the project is complete?
+            <span class="faq-icon"><i class="fas fa-plus"></i></span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes — we provide free support and updates for 3 months after delivery. Beyond that period, additional changes may be subject to a small service fee.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            What is your payment structure?
+            <span class="faq-icon"><i class="fas fa-plus"></i></span>
+          </button>
+          <div class="faq-answer">
+            <p>We require a 50% deposit to begin work on any project. The remaining balance is due upon final delivery and your approval of the completed product.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Do you work with clients outside Zambia?
+            <span class="faq-icon"><i class="fas fa-plus"></i></span>
+          </button>
+          <div class="faq-answer">
+            <p>Absolutely. We've delivered projects for clients across multiple countries. We work remotely via email, video calls, and collaborative tools — distance is no barrier.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            How do I get started with a project?
+            <span class="faq-icon"><i class="fas fa-plus"></i></span>
+          </button>
+          <div class="faq-answer">
+            <p>Simply reach out via our <a href="contact.html" style="color:var(--brand-teal); text-decoration:underline;">contact page</a> or email us at hutetechnologies@gmail.com. We'll schedule a free consultation to understand your needs and propose a plan.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="background: var(--brand-dark-3); padding: 100px 48px;">
+    <div class="cta-banner" data-aos="fade-up">
+      <span class="section-label" style="justify-content:center; margin-bottom:16px;">Ready to Start?</span>
+      <h2>Have a Project In Mind?</h2>
+      <p>Let's turn your idea into reality. Our team is ready to help you build something great.</p>
+      <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+        <a href="contact.html" class="btn-primary">Start a Project <i class="fas fa-arrow-right" style="font-size:0.8em"></i></a>
+        <a href="services.html" class="btn-ghost">View Our Services</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <section class="footer">
+    <div class="bottom_section">
+      <img src="images/logo.png" alt="Hute Technologies" class="footer-logo">
+      <p>Hute Technologies — delivering innovative digital solutions from Kitwe, Zambia to clients worldwide.</p>
+      <div class="footer-social">
+        <box-icon type='logo' name='facebook-circle'></box-icon>
+        <box-icon name='envelope' type='solid'></box-icon>
+        <box-icon type='logo' name='instagram'></box-icon>
+      </div>
+    </div>
+    <div class="bottom_section">
+      <h6>Quick Links</h6>
+      <ul>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="project.html">Projects</a></li>
+      </ul>
+    </div>
+    <div class="bottom_section">
+      <h6>Legal</h6>
+      <ul>
+        <li><a href="policy.html">Privacy Policy</a></li>
+        <li><a href="policy.html">Terms of Service</a></li>
+        <li><a href="policy.html">Refund Policy</a></li>
+      </ul>
+    </div>
+    <div class="bottom_section">
+      <h6>Contact Us</h6>
+      <ul>
+        <li><a href="mailto:hutetechnologies@gmail.com">hutetechnologies@gmail.com</a></li>
+        <li><a href="#">Kitwe, Copperbelt, Zambia</a></li>
+        <li><a href="tel:+260763117362">+260 763 117 362</a></li>
+      </ul>
+    </div>
+  </section>
+  <div class="copyright">
+    &copy; <span id="year"></span> Hute Technologies. All Rights Reserved.
+</div>
+<script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 850, once: true, offset: 80 });
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 40));
+
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      // close all
+      document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+  </script>
+</body>
+</html>
